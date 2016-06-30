@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
 import './rxjs-operators';
+import {DayCycleCollectionComponent} from './daycyclecollection.component';
+
 
 @Component({
   selector: 'my-app',
-  template: '<h1>Home</h1>'
+  template: `
+<daycycle-collection></daycycle-collection>
+`,
+  directives: [DayCycleCollectionComponent]
 })
 
 export class AppComponent { }

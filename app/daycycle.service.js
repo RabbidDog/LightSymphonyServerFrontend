@@ -12,6 +12,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by rabbiddog on 6/5/16.
  */
 const core_1 = require('@angular/core');
+const daycycle_component_1 = require('./daycycle.component');
 const http_1 = require('@angular/http');
 const http_2 = require('@angular/http');
 const Observable_1 = require('rxjs/Observable');
@@ -19,24 +20,26 @@ let DayCycleService = class DayCycleService {
     constructor(http) {
         this.http = http;
         this.serviceUrl = 'http://localhost:3000/';
+        console.log("DayCycleService constructor");
     }
     getAllConfiguration() {
-        return this.http.get(this.serviceUrl + 'day-cycle/')
+        console.log("Call made to get all configuration");
+        return this.http.get(this.serviceUrl + 'api/day-cycle')
             .map(this.extractData)
             .catch(this.handleError);
     }
     getConfigurationByTitle(title) {
-        return this.http.get(this.serviceUrl + 'day-cycle/?title=' + title)
+        return this.http.get(this.serviceUrl + 'api/day-cycle?title=' + title)
             .map(this.extractData)
             .catch(this.handleError);
     }
     getConfigurationById(id) {
-        return this.http.get(this.serviceUrl + 'day-cycle/?id=' + id)
+        return this.http.get(this.serviceUrl + 'api/day-cycle?id=' + id)
             .map(this.extractData)
             .catch(this.handleError);
     }
     getConfigurationByTitleAndId(title, id) {
-        return this.http.get(this.serviceUrl + 'day-cycle/?id=' + id + '&title=' + title)
+        return this.http.get(this.serviceUrl + 'api/day-cycle?id=' + id + '&title=' + title)
             .map(this.extractData)
             .catch(this.handleError);
     }
@@ -44,13 +47,20 @@ let DayCycleService = class DayCycleService {
         let body = JSON.stringify({ title: title, configuration: configuration, description: description, maxmoonlight: maxMoonlight });
         let headers = new http_2.Headers({ 'Content-Type': 'application/json' });
         let options = new http_2.RequestOptions({ headers: headers });
-        return this.http.post(this.serviceUrl + 'day-cycle/', body, options)
+        return this.http.post(this.serviceUrl + 'api/daycycles/', body, options)
             .map(this.extractData)
             .catch(this.handleError);
     }
     extractData(res) {
+        console.log(res.json);
         let body = res.json();
-        return body.data || {};
+        let result = [];
+        if (body) {
+            body.forEach((item) => {
+                result.push(new daycycle_component_1.DayCycleComponent(item.title, item.uniqueID, item.description, item.maxmoonlight, item.description));
+            });
+        }
+        return result;
     }
     handleError(error) {
         // TODO : Implement logging on file

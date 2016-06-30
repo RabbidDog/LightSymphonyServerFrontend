@@ -14,18 +14,18 @@ export class DayCycleComponent{
     title:string;
     uniqueId:string;
     description:string;
-    maxMoomlight:number;
+    maxMoonlight:number;
     configuration:string;
 
     constructor(title:string,
     uniqueId:string,
     description:string,
-    maxMoomlight:number,
+    maxMoonlight:number,
     configuration:string)
     {
         this.configuration = configuration;
         this.description = description;
-        this.maxMoomlight = maxMoomlight;
+        this.maxMoonlight = maxMoonlight;
         this.title = title;
         this.uniqueId = uniqueId;
     }

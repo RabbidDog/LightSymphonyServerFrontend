@@ -10,12 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 const core_1 = require('@angular/core');
 require('./rxjs-operators');
+const daycyclecollection_component_1 = require('./daycyclecollection.component');
 let AppComponent = class AppComponent {
 };
 AppComponent = __decorate([
     core_1.Component({
         selector: 'my-app',
-        template: '<h1>Home</h1>'
+        template: `
+<daycycle-collection></daycycle-collection>
+`,
+        directives: [daycyclecollection_component_1.DayCycleCollectionComponent]
     }), 
     __metadata('design:paramtypes', [])
 ], AppComponent);

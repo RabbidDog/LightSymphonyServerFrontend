@@ -13,10 +13,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 const core_1 = require('@angular/core');
 let DayCycleComponent = class DayCycleComponent {
-    constructor(title, uniqueId, description, maxMoomlight, configuration) {
+    constructor(title, uniqueId, description, maxMoonlight, configuration) {
         this.configuration = configuration;
         this.description = description;
-        this.maxMoomlight = maxMoomlight;
+        this.maxMoonlight = maxMoonlight;
         this.title = title;
         this.uniqueId = uniqueId;
     }
