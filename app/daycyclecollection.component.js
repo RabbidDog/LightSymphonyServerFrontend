@@ -58,7 +58,6 @@ let DayCycleCollectionComponent = class DayCycleCollectionComponent {
             else {
                 this.daycycle_service.getAllConfiguration().subscribe(daycycles => this.collection_daycycle = daycycles, error => this.error_message = error);
             }
-            this.daycycle_service;
         });
     }
     OnSelect(fBy) {
@@ -71,44 +70,55 @@ let DayCycleCollectionComponent = class DayCycleCollectionComponent {
             .subscribe(daycycle => valueToReturn = daycycle, error => this.error_message = error);
         return valueToReturn;
     }
+    download(uniquedId) {
+        console.log("requested upload");
+        var daycycle = this.collection_daycycle.find(d => d.uniqueId === uniquedId);
+        var file = new Blob([JSON.stringify(daycycle)], { type: 'text/plain' });
+        var url = window.URL.createObjectURL(file);
+        window.open(url);
+    }
 };
 DayCycleCollectionComponent = __decorate([
     core_1.Component({
         selector: 'daycycle-collection',
         template: `
-<div>
-    <h2>Day Cycle Configurations</h2>
+<div class="app-component">
+    
+    <div class="overdark page-name glass-dark">
+        <h1>Day Cycle Configurations</h1>
+        <p class="medium-text">
+            At aquaLeds we provide our customers with aesthetically pleasing configuration for their Led devices. Many of these configurations were
+             tested in our production house. Others were created by users and made available for everyone to use. 
+        </p>
+    </div>
+    <div class="page-content">
+    
     <div class="row">
-        <select   #sel  (change)="OnSelect(sel.value)" class="drop-down"> 
+        <input type="text" [ngFormControl] = "term" class="search-box left"/>  
+        <select   #sel  (change)="OnSelect(sel.value)" class="drop-down left"> 
             <option *ngFor="let fValue of filterByOptions">
                 {{fValue}}
             </option>
         </select>
-        <input type="text" [ngFormControl] = "term" class="search-box"/>  
-        
-                                                                                                                                                                                                                                                                                           
+                                                                                                                                                                                                                                                                                              
     </div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Code</th>
-            <th>Title</th>
-            <th>Configuration</th>
-            <th>Moon Intensity</th>
-            <th>Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor='let daycycle of collection_daycycle'>
-            <td>{{daycycle.uniqueId}}</td>
-            <td>{{daycycle.title}}</td>
-            <td>{{daycycle.configuration}}</td>
-            <td>{{daycycle.maxMoonlight}}</td>
-            <td>{{daycycle.description}}</td>
-        </tr>
-        </tbody>
-    </table>
-    
+    <div *ngFor="let daycycle of collection_daycycle" class="round-corner daycycle-detail">
+        <div class="daycycle-title">
+            {{daycycle.title}}
+        </div>
+        <div>
+            <h2>Code</h2>
+            <p>{{daycycle.uniqueId}}</p>
+        </div >
+        <div>
+            <h2>Description</h2>
+            <p>{{daycycle.description}}</p>
+        </div>
+        <div class="right-bottom">
+            <img src="../resources/images/dw48.png" (click)="download(daycycle.uniqueId)"/>
+        </div>
+    </div>
+    </div>
 </div>
 `,
         providers: [daycycle_service_1.DayCycleService]
